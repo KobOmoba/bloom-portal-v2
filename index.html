@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#06091a">
+<title>EduBloom Portal v2</title>
+<style>
+:root{--bg:#06091a;--s1:#0d1226;--s2:#141d35;--s3:#1e2b4a;--border:rgba(100,120,200,.15);--text:#e2e8f0;--sub:#64748b;--brand:#2563eb;--money:#10b981;--danger:#ef4444;--warn:#f59e0b;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;-webkit-tap-highlight-color:transparent;}
+#login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem 1.25rem;}
+#main-app{display:none;}
+.v2-banner{background:#7c3aed;color:#fff;text-align:center;padding:4px;font-size:.72rem;font-weight:700;letter-spacing:.04em;}
+.hdr{background:var(--s1);border-bottom:1px solid var(--border);padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+.hdr-brand{font-size:.9rem;font-weight:800;color:var(--brand);}
+.nav{background:var(--s1);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none;}
+.nav::-webkit-scrollbar{display:none;}
+.nav button{flex-shrink:0;padding:.55rem .85rem;font-size:.72rem;font-weight:600;border:none;background:transparent;color:var(--sub);cursor:pointer;border-bottom:2px solid transparent;}
+.nav button.on{color:var(--brand);border-bottom-color:var(--brand);}
+.content{padding:1rem 1.25rem;max-width:600px;width:100%;margin:0 auto;}
+.sec{display:none;}.sec.on{display:block;}
+.card{background:var(--s2);border:1px solid var(--border);border-radius:14px;padding:.9rem;margin-bottom:.7rem;}
+.ct{font-weight:700;font-size:.88rem;margin-bottom:.55rem;}
+button{cursor:pointer;font-family:inherit;border:none;border-radius:10px;font-weight:600;}
+.btn-p{background:var(--brand);color:#fff;width:100%;padding:.8rem;font-size:.9rem;}
+.btn-g{background:var(--s3);color:var(--text);border:1px solid var(--border);padding:.55rem .9rem;}
+.btn-ok{background:var(--money);color:#fff;padding:.55rem 1rem;}
+.btn-d{background:var(--danger);color:#fff;padding:.55rem 1rem;}
+.btn-sm{padding:.36rem .8rem;font-size:.74rem;}
+label{display:block;font-size:.74rem;font-weight:600;color:var(--sub);margin-bottom:3px;margin-top:.55rem;}
+input,select,textarea{width:100%;background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:.6rem .75rem;color:var(--text);font-size:.86rem;font-family:inherit;outline:none;-webkit-appearance:none;appearance:none;}
+input:focus,select:focus{border-color:var(--brand);}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;margin-bottom:.75rem;}
+.stat-box{background:var(--s3);border-radius:12px;padding:.8rem;text-align:center;}
+.stat-n{font-size:1.6rem;font-weight:800;}
+.stat-l{font-size:.65rem;color:var(--sub);margin-top:2px;}
+.deal{background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:.8rem;margin-bottom:.6rem;}
+.dn{font-weight:700;font-size:.88rem;margin:.2rem 0 .2rem;}
+.dm{font-size:.74rem;color:var(--sub);margin-top:2px;}
+.dact{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem;}
+.chip{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.65rem;font-weight:700;margin-bottom:3px;}
+.cp{background:rgba(245,158,11,.15);color:var(--warn);}
+.ca{background:rgba(16,185,129,.15);color:var(--money);}
+.cr{background:rgba(239,68,68,.15);color:var(--danger);}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1000;align-items:flex-end;justify-content:center;}
+.modal.on{display:flex;}
+.mbox{background:var(--s1);border-radius:18px 18px 0 0;padding:1.25rem;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;}
+.mclose{position:absolute;top:1rem;right:1rem;background:var(--s3);border:none;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--sub);font-size:.8rem;}
+.sdot{font-size:.7rem;}.sd-on{color:var(--money);}.sd-off{color:var(--danger);}.sd-sync{color:var(--warn);}
+.err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:8px;padding:.6rem;font-size:.8rem;color:#fca5a5;display:none;margin-top:.6rem;}
+.activity-feed{font-size:.78rem;}
+.student-preview{background:var(--s3);border-radius:8px;padding:.6rem;max-height:160px;overflow-y:auto;font-size:.74rem;margin-top:.5rem;}
+.stu-pr-row{display:flex;align-items:center;gap:.4rem;padding:2px 0;border-bottom:1px solid var(--border);}
+.badge{display:inline-block;padding:2px 7px;border-radius:12px;font-size:.65rem;font-weight:700;}
+.bg{background:rgba(16,185,129,.14);color:var(--money);}
+.ba{background:rgba(245,158,11,.14);color:var(--warn);}
+.br{background:rgba(239,68,68,.14);color:var(--danger);}
+.bb{background:rgba(37,99,235,.14);color:#60a5fa;}
+</style>
+</head>
+<body>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div style="text-align:center;margin-bottom:1.5rem;">
+    <div style="font-size:1.6rem;font-weight:900;color:var(--brand);">🌸 EduBloom</div>
+    <div style="font-size:.8rem;color:var(--sub);">Admin Portal</div>
+    <div style="display:inline-block;background:#7c3aed;color:#fff;border-radius:12px;padding:2px 10px;font-size:.68rem;font-weight:700;margin-top:4px;">⚗️ v2 TEST BUILD</div>
+  </div>
+  <div style="background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:1.5rem;width:100%;max-width:340px;">
+    <label>Admin Password</label>
+    <input id="l-pwd" type="password" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn-p" id="l-btn" onclick="doLogin()" style="margin-top:.7rem;">🔓 Enter</button>
+    <div class="err" id="l-err"></div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="main-app">
+  <div class="v2-banner">⚗️ v2 TEST — reads/writes v2_deals · v2_schools (production data untouched)</div>
+  <div class="hdr">
+    <span class="hdr-brand">🌸 EduBloom Portal v2</span>
+    <div style="display:flex;align-items:center;gap:.4rem;">
+      <span id="pending-badge" style="background:var(--danger);color:#fff;border-radius:10px;padding:1px 7px;font-size:.7rem;font-weight:700;display:none;"></span>
+      <span id="sync" class="sdot sd-off">●</span>
+      <button class="btn-g btn-sm" onclick="logout()">Logout</button>
+    </div>
+  </div>
+  <div class="nav">
+    <button class="on" data-t="dashboard" onclick="go('dashboard')">📊 Dashboard</button>
+    <button data-t="approved" onclick="go('approved')">🏫 Schools</button>
+    <button data-t="agents" onclick="go('agents')">👥 Agents</button>
+    <button data-t="ledger" onclick="go('ledger')">💰 Ledger</button>
+    <button data-t="settings" onclick="go('settings')">⚙️ Settings</button>
+  </div>
+  <div style="overflow-y:auto;padding-bottom:1rem;">
+
+    <!-- DASHBOARD -->
+    <div id="sec-dashboard" class="sec on">
+      <div class="content">
+        <div class="card">
+          <div class="ct">Overview</div>
+          <div class="stat-grid">
+            <div class="stat-box"><div class="stat-n" id="d-pending">0</div><div class="stat-l">⏳ Pending</div></div>
+            <div class="stat-box"><div class="stat-n" id="d-approved">0</div><div class="stat-l">✅ Schools</div></div>
+            <div class="stat-box"><div class="stat-n" id="d-agents">0</div><div class="stat-l">👥 Agents</div></div>
+            <div class="stat-box"><div class="stat-n" id="d-commission" style="font-size:1rem;">₦0</div><div class="stat-l">💰 Commission</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ct">⏳ Pending Deals</div>
+          <div id="pending-list"><p style="color:var(--sub);font-size:.8rem;text-align:center;padding:1rem;">Loading...</p></div>
+        </div>
+        <div class="card">
+          <div class="ct">📋 Activity</div>
+          <div id="activity-feed" class="activity-feed"><em style="color:var(--sub);">No activity yet.</em></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPROVED SCHOOLS -->
+    <div id="sec-approved" class="sec">
+      <div class="content">
+        <div class="card">
+          <div class="ct">🏫 Approved Schools <span style="font-size:.7rem;color:var(--sub);">(v2 test)</span></div>
+          <input placeholder="Search schools..." oninput="renderApproved(this.value)" style="margin-bottom:.5rem;">
+          <div id="approved-list"><p style="color:var(--sub);font-size:.8rem;text-align:center;padding:1rem;">Loading...</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGENTS -->
+    <div id="sec-agents" class="sec">
+      <div class="content">
+        <div class="card">
+          <div class="ct">👥 Registered Agents</div>
+          <p style="font-size:.74rem;color:var(--sub);margin-bottom:.5rem;">Agents are shared with production — changes here affect the live agent list.</p>
+          <div id="agents-list"><p style="color:var(--sub);font-size:.8rem;text-align:center;padding:1rem;">Loading...</p></div>
+        </div>
+        <div class="card">
+          <div class="ct">➕ Add Agent</div>
+          <label>Name</label><input id="ag-name" placeholder="Agent full name">
+          <label>Phone</label><input id="ag-phone" type="tel" placeholder="e.g. 08012345678">
+          <label>Commission %</label><input id="ag-rate" type="number" value="20">
+          <button class="btn-ok" style="width:100%;margin-top:.6rem;" onclick="saveAgent()">💾 Add Agent</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEDGER -->
+    <div id="sec-ledger" class="sec">
+      <div class="content">
+        <div class="card">
+          <div class="ct">💰 Commission Ledger <span style="font-size:.7rem;color:var(--sub);">(v2 test)</span></div>
+          <div id="ledger-body"><p style="color:var(--sub);font-size:.8rem;text-align:center;padding:1rem;">Loading...</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="sec-settings" class="sec">
+      <div class="content">
+        <div class="card">
+          <div class="ct">⚙️ Settings</div>
+          <label>Groq API Key</label><input id="s-groq" placeholder="gsk_..." type="password">
+          <label>Admin Password</label><input id="s-adminpwd" type="password" placeholder="Leave blank to keep current">
+          <label>Default School Password</label><input id="s-schoolpwd" placeholder="bloom2026">
+          <label>WhatsApp Template</label>
+          <textarea id="s-tpl" rows="5" style="border-radius:10px;resize:vertical;">*Welcome to Educational Bloom!* 🎉
+
+Your school has been activated.
+
+*School ID:* {{schoolId}}
+*Password:* {{password}}
+*Portal:* https://kobomoba.github.io/bloom-school-v2/
+
+You already have your students and fee data inside. Log in and explore!
+– AariNAT Admin</textarea>
+          <button class="btn-ok" style="width:100%;margin-top:.65rem;" onclick="saveSettings()">💾 Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- APPROVE MODAL -->
+<div class="modal" id="approve-modal">
+  <div class="mbox" style="position:relative;">
+    <button class="mclose" onclick="closeM('approve-modal')">✕</button>
+    <div class="ct">✅ Approve Deal</div>
+    <div id="ap-preview"></div>
+    <div style="background:var(--s3);border-radius:10px;padding:.65rem;margin-top:.5rem;">
+      <div style="font-size:.76rem;color:var(--sub);">School ID</div>
+      <div style="font-weight:800;font-size:1rem;font-family:monospace;color:var(--brand);" id="ap-id"></div>
+      <div style="font-size:.76rem;color:var(--sub);margin-top:.3rem;">Password</div>
+      <div style="font-weight:700;" id="ap-pwd"></div>
+    </div>
+    <div id="ap-students-preview" style="display:none;margin-top:.5rem;">
+      <div style="font-size:.76rem;font-weight:700;color:var(--money);margin-bottom:.3rem;" id="ap-students-count"></div>
+      <div class="student-preview" id="ap-students-list"></div>
+    </div>
+    <button class="btn-ok" style="width:100%;margin-top:.75rem;" onclick="confirmApproval()">✅ Approve & Activate</button>
+    <button class="btn-g btn-sm" style="width:100%;margin-top:.4rem;" onclick="closeM('approve-modal')">Cancel</button>
+  </div>
+</div>
+
+<script src="portal_app.js?v=1"></script>
+</body>
+</html>
