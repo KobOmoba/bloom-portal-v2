@@ -860,7 +860,7 @@ async function loadSettings(){
 async function saveSettings(){
   const pwd=$('s-adminpwd').value.trim();
   if(pwd&&pwd.length<4)return alert('Admin password must be at least 4 characters.');
-  SQ.push({t:'saveSettings',d:{...(pwd?{adminPassword:pwd}:{}),...($('s-groq')?.value.trim()?{groqApiKey:$('s-groq').value.trim()}:{}),defaultSchoolPassword:$('s-schoolpwd').value,autoCAC:$('s-cac').value,whatsappTemplate:$('s-tpl').value,updatedAt:new Date()}});
+  SQ.push({t:'saveSettings',d:{...(pwd?{adminPassword:pwd}:{}),...($('s-gemini')?.value.trim()?{geminiApiKey:$('s-gemini').value.trim()}:{}),...($('s-groq')?.value.trim()?{groqApiKey:$('s-groq').value.trim()}:{}),defaultSchoolPassword:$('s-schoolpwd').value,autoCAC:$('s-cac').value,whatsappTemplate:$('s-tpl').value,updatedAt:new Date()}});
   alert('✅ Settings saved!');
   log('⚙️ Settings updated');
 }
