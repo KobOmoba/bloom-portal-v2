@@ -166,8 +166,18 @@ input:focus,select:focus{border-color:var(--brand);}
       <div class="content">
         <div class="card">
           <div class="ct">⚙️ Settings</div>
-          <label>Gemini API Key <span style="font-size:.7rem;color:var(--money);">(for ledger OCR — get free at aistudio.google.com)</span></label><input id="s-gemini" placeholder="AIza..." type="password">
-          <label>Groq API Key <span style="font-size:.7rem;color:var(--sub);">(for signboard OCR)</span></label><input id="s-groq" placeholder="gsk_..." type="password">
+          <label>DeepSeek-OCR Key <span style="font-size:.7rem;color:var(--money);">(ledger OCR — free at siliconflow.cn)</span></label>
+          <input id="s-deepseek" placeholder="Paste SiliconFlow API key here..." type="password">
+          <label style="font-size:.72rem;color:var(--sub);margin-top:2px;">Provider</label>
+          <select id="s-deepseek-provider">
+            <option value="siliconflow">SiliconFlow (free — recommended)</option>
+            <option value="novita">Novita.ai</option>
+            <option value="deepinfra">DeepInfra</option>
+          </select>
+          <label>Gemini API Key <span style="font-size:.7rem;color:var(--sub);">(alternative ledger OCR)</span></label>
+          <input id="s-gemini" placeholder="AIza..." type="password">
+          <label>Groq API Key <span style="font-size:.7rem;color:var(--sub);">(signboard OCR — works well)</span></label>
+          <input id="s-groq" placeholder="gsk_..." type="password">
           <label>Admin Password</label><input id="s-adminpwd" type="password" placeholder="Leave blank to keep current">
           <label>Default School Password</label><input id="s-schoolpwd" placeholder="bloom2026">
           <label>WhatsApp Template</label>
