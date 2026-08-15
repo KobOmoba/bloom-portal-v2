@@ -1,0 +1,25 @@
+{
+  "name": "EduBloom Command Center",
+  "short_name": "Command Center",
+  "description": "AariNAT EduBloom Admin Portal \u2014 manage schools, agents and commissions",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#050d18",
+  "theme_color": "#2563eb",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
