@@ -1,23 +1,20 @@
-# 🎛️ Bloom Portal v2
-**EduBloom Suite — AariNAT Company Limited | Admin Portal**
+# bloom-portal-v2 — Portal PENTEST SANDBOX
+**Last reset:** 2026-08-14
+**Source:** bloom-portal production (portal.edubloom.com.ng)
 
-> Version 2 is a clean rebuild on the EduBloom v2 Data Architecture.
-> v1 lives at: https://github.com/KobOmoba/bloom-portal
+Clean copy of the current live Command Center codebase for security testing.
 
-## What's new in v2
-- Agent performance charts (deals, commission over time)
-- Invoice & receipt generator for school payments
-- Bulk school import via CSV
-- Automated WhatsApp on deal approval
-- Unified dashboard with analytics
-- Refund management for Exam Pass Guarantee
+## Live sandbox URL
+https://kobomoba.github.io/bloom-portal-v2/
 
-## Data Architecture
-All collections follow the EduBloom v2 Data Architecture Blueprint.
-See: `docs/data-architecture.md`
+## What changed
+- Wiped old content
+- Replaced with exact bloom-portal production code as of 2026-08-14
 
-## Hosting
-GitHub Pages → portal-v2.edubloom.com.ng
+## Pentest status
+See PENTEST_REPORT.md (tracked separately)
 
-## Status
-🚧 In active development
+## Standing rules
+- Fixes proved here → ported verbatim to bloom-portal
+- Cache-bust: bump ?v= in index.html + CACHE_NAME in sw.js every push
+- Never commit CNAME to this repo
