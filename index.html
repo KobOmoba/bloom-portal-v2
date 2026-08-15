@@ -1,225 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#06091a">
-<title>EduBloom Portal v2</title>
-<style>
-:root{--bg:#06091a;--s1:#0d1226;--s2:#141d35;--s3:#1e2b4a;--border:rgba(100,120,200,.15);--text:#e2e8f0;--sub:#64748b;--brand:#2563eb;--money:#10b981;--danger:#ef4444;--warn:#f59e0b;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;-webkit-tap-highlight-color:transparent;}
-#login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem 1.25rem;}
-#main-app{display:none;}
-.v2-banner{background:#7c3aed;color:#fff;text-align:center;padding:4px;font-size:.72rem;font-weight:700;letter-spacing:.04em;}
-.hdr{background:var(--s1);border-bottom:1px solid var(--border);padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
-.hdr-brand{font-size:.9rem;font-weight:800;color:var(--brand);}
-.nav{background:var(--s1);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none;}
-.nav::-webkit-scrollbar{display:none;}
-.nav button{flex-shrink:0;padding:.55rem .85rem;font-size:.72rem;font-weight:600;border:none;background:transparent;color:var(--sub);cursor:pointer;border-bottom:2px solid transparent;}
-.nav button.on{color:var(--brand);border-bottom-color:var(--brand);}
-.content{padding:1rem 1.25rem;max-width:600px;width:100%;margin:0 auto;}
-.sec{display:none;}.sec.on{display:block;}
-.card{background:var(--s2);border:1px solid var(--border);border-radius:14px;padding:.9rem;margin-bottom:.7rem;}
-.ct{font-weight:700;font-size:.88rem;margin-bottom:.55rem;}
-button{cursor:pointer;font-family:inherit;border:none;border-radius:10px;font-weight:600;}
-.btn-p{background:var(--brand);color:#fff;width:100%;padding:.8rem;font-size:.9rem;}
-.btn-g{background:var(--s3);color:var(--text);border:1px solid var(--border);padding:.55rem .9rem;}
-.btn-ok{background:var(--money);color:#fff;padding:.55rem 1rem;}
-.btn-d{background:var(--danger);color:#fff;padding:.55rem 1rem;}
-.btn-sm{padding:.36rem .8rem;font-size:.74rem;}
-label{display:block;font-size:.74rem;font-weight:600;color:var(--sub);margin-bottom:3px;margin-top:.55rem;}
-input,select,textarea{width:100%;background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:.6rem .75rem;color:var(--text);font-size:.86rem;font-family:inherit;outline:none;-webkit-appearance:none;appearance:none;}
-input:focus,select:focus{border-color:var(--brand);}
-.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;margin-bottom:.75rem;}
-.stat-box{background:var(--s3);border-radius:12px;padding:.8rem;text-align:center;}
-.stat-n{font-size:1.6rem;font-weight:800;}
-.stat-l{font-size:.65rem;color:var(--sub);margin-top:2px;}
-.deal{background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:.8rem;margin-bottom:.6rem;}
-.dn{font-weight:700;font-size:.88rem;margin:.2rem 0 .2rem;}
-.dm{font-size:.74rem;color:var(--sub);margin-top:2px;}
-.dact{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem;}
-.chip{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.65rem;font-weight:700;margin-bottom:3px;}
-.cp{background:rgba(245,158,11,.15);color:var(--warn);}
-.ca{background:rgba(16,185,129,.15);color:var(--money);}
-.cr{background:rgba(239,68,68,.15);color:var(--danger);}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1000;align-items:flex-end;justify-content:center;}
-.modal.on{display:flex;}
-.mbox{background:var(--s1);border-radius:18px 18px 0 0;padding:1.25rem;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;}
-.mclose{position:absolute;top:1rem;right:1rem;background:var(--s3);border:none;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--sub);font-size:.8rem;}
-.sdot{font-size:.7rem;}.sd-on{color:var(--money);}.sd-off{color:var(--danger);}.sd-sync{color:var(--warn);}
-.err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:8px;padding:.6rem;font-size:.8rem;color:#fca5a5;display:none;margin-top:.6rem;}
-.activity-feed{font-size:.78rem;}
-.student-preview{background:var(--s3);border-radius:8px;padding:.6rem;max-height:160px;overflow-y:auto;font-size:.74rem;margin-top:.5rem;}
-.stu-pr-row{display:flex;align-items:center;gap:.4rem;padding:2px 0;border-bottom:1px solid var(--border);}
-.badge{display:inline-block;padding:2px 7px;border-radius:12px;font-size:.65rem;font-weight:700;}
-.bg{background:rgba(16,185,129,.14);color:var(--money);}
-.ba{background:rgba(245,158,11,.14);color:var(--warn);}
-.br{background:rgba(239,68,68,.14);color:var(--danger);}
-.bb{background:rgba(37,99,235,.14);color:#60a5fa;}
-</style>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#050d18">
+<title>AariNAT Command Center</title>
+<link rel="stylesheet" href="style.css?v=1781627730">
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="apple-touch-icon" href="icon-192x192.png">
 </head>
 <body>
 
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-
 <!-- LOGIN -->
-<div id="login-screen">
-  <div style="text-align:center;margin-bottom:1.5rem;">
-    <div style="font-size:1.6rem;font-weight:900;color:var(--brand);">🌸 EduBloom</div>
-    <div style="font-size:.8rem;color:var(--sub);">Admin Portal</div>
-    <div style="display:inline-block;background:#7c3aed;color:#fff;border-radius:12px;padding:2px 10px;font-size:.68rem;font-weight:700;margin-top:4px;">⚗️ v2 TEST BUILD</div>
-  </div>
-  <div style="background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:1.5rem;width:100%;max-width:340px;">
+<div id="login-screen" class="login-screen">
+  <div class="lbox">
+    <div class="lbox-logo">🎛️ AariNAT Command Center</div>
+    <div class="lbox-sub">Educational Bloom™ Admin Panel</div>
     <label>Admin Password</label>
-    <input id="l-pwd" type="password" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="btn-p" id="l-btn" onclick="doLogin()" style="margin-top:.7rem;">🔓 Enter</button>
-    <div class="err" id="l-err"></div>
+    <div style="position:relative;width:100%;display:block;">
+      <input type="password" id="l-pwd" placeholder="Enter admin password"
+        onkeydown="if(event.key==='Enter')doLogin()"
+        style="width:100%!important;box-sizing:border-box!important;padding-right:52px!important;margin-bottom:0.7rem!important;display:block!important;">
+      <span id="eye-btn"
+        onclick="(function(){var i=document.getElementById('l-pwd');var b=document.getElementById('eye-btn');i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'👁':'🙈';})()"
+        style="position:absolute;right:14px;top:calc(50% - 0.35rem);transform:translateY(-50%);font-size:1.3rem;cursor:pointer;user-select:none;line-height:1;z-index:2;pointer-events:auto;">👁</span>
+    </div>
+    <button id="l-btn" class="btn-b" onclick="doLogin()">🔓 Enter</button>
+    <div id="l-err" class="err"></div>
+    <p style="font-size:0.72rem;color:var(--sub);text-align:center;margin-top:0.75rem;">Forgot your password? <span onclick="forgotPassword()" style="color:#60a5fa;cursor:pointer;text-decoration:underline;">Send reset link</span></p>
   </div>
 </div>
 
 <!-- MAIN APP -->
-<div id="main-app">
-  <div class="v2-banner">⚗️ v2 TEST — reads/writes v2_deals · v2_schools (production data untouched)</div>
-  <div class="hdr">
-    <span class="hdr-brand">🌸 EduBloom Portal v2</span>
-    <div style="display:flex;align-items:center;gap:.4rem;">
-      <span id="pending-badge" style="background:var(--danger);color:#fff;border-radius:10px;padding:1px 7px;font-size:.7rem;font-weight:700;display:none;"></span>
-      <span id="sync" class="sdot sd-off">●</span>
-      <button class="btn-g btn-sm" onclick="logout()">Logout</button>
+<div id="main-app" style="display:none;">
+
+  <header class="hdr">
+    <div>
+      <h1>🎛️ Command Center</h1>
+      <div class="hdr-sub">AariNAT Company Limited</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span id="sync" class="sdot sdot-off">● Offline</span>
+      <button class="btn-sm btn-ghost" onclick="logout()" style="color:white;">Logout</button>
+    </div>
+  </header>
+
+  <div class="cac">
+    <div class="cac-t">💰 CAC Reactivation Fund</div>
+    <div class="cac-bar"><div id="cac-fill" class="cac-fill" style="width:0%;"></div></div>
+    <div class="cac-row">
+      <span>Raised: <strong id="cac-raised">₦0</strong></span>
+      <span>Target: ₦250,000</span>
+      <span>Left: <strong id="cac-left">₦250,000</strong></span>
     </div>
   </div>
-  <div class="nav">
-    <button class="on" data-t="dashboard" onclick="go('dashboard')">📊 Dashboard</button>
-    <button data-t="approved" onclick="go('approved')">🏫 Schools</button>
-    <button data-t="agents" onclick="go('agents')">👥 Agents</button>
-    <button data-t="ledger" onclick="go('ledger')">💰 Ledger</button>
-    <button data-t="settings" onclick="go('settings')">⚙️ Settings</button>
+  <div class="cac-in">
+    <input type="number" id="cac-amt" placeholder="Amount (₦)" min="0">
+    <input type="text" id="cac-note" placeholder="Note (e.g. Cash from Bayo)">
+    <button onclick="addCAC()">➕ Record</button>
   </div>
-  <div style="overflow-y:auto;padding-bottom:1rem;">
+
+  <nav class="nav">
+    <button class="on" data-t="dashboard" onclick="go('dashboard')">📊 Dashboard</button>
+    <button data-t="pending" onclick="go('pending')">🔄 Pending <span id="pending-badge" class="nb">0</span></button>
+    <button data-t="approved" onclick="go('approved')">✅ Approved</button>
+    <button data-t="agents" onclick="go('agents')">👥 Agents <span id="agent-req-badge" class="nb" style="display:none;">0</span></button>
+    <button data-t="ledger" onclick="go('ledger')">💰 Ledger</button>
+    <button data-t="opps" onclick="go('opps')">🔍 Opportunities</button>
+    <button data-t="settings" onclick="go('settings')">⚙️ Settings</button>
+    <button data-t="calendar" onclick="go('calendar')">📅 Calendar</button>
+  </nav>
+
+  <main class="wrap">
 
     <!-- DASHBOARD -->
-    <div id="sec-dashboard" class="sec on">
-      <div class="content">
-        <div class="card">
-          <div class="ct">Overview</div>
-          <div class="stat-grid">
-            <div class="stat-box"><div class="stat-n" id="d-pending">0</div><div class="stat-l">⏳ Pending</div></div>
-            <div class="stat-box"><div class="stat-n" id="d-approved">0</div><div class="stat-l">✅ Schools</div></div>
-            <div class="stat-box"><div class="stat-n" id="d-agents">0</div><div class="stat-l">👥 Agents</div></div>
-            <div class="stat-box"><div class="stat-n" id="d-commission" style="font-size:1rem;">₦0</div><div class="stat-l">💰 Commission</div></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="ct">⏳ Pending Deals</div>
-          <div id="pending-list"><p style="color:var(--sub);font-size:.8rem;text-align:center;padding:1rem;">Loading...</p></div>
-        </div>
-        <div class="card">
-          <div class="ct">📋 Activity</div>
-          <div id="activity-feed" class="activity-feed"><em style="color:var(--sub);">No activity yet.</em></div>
+    <section id="sec-dashboard" class="sec on">
+      <div class="grid4">
+        <div class="stat"><div class="sn" id="d-pending">0</div><div class="sl">Pending</div></div>
+        <div class="stat"><div class="sn" id="d-approved">0</div><div class="sl">Approved</div></div>
+        <div class="stat"><div class="sn" id="d-agents">0</div><div class="sl">Agents</div></div>
+        <div class="stat"><div class="sn" id="d-commission" style="font-size:1.1rem;">₦0</div><div class="sl">Commission</div></div>
+      </div>
+      <div class="card">
+        <div class="ct">⚡ Quick Actions</div>
+        <div class="grid2">
+          <button class="btn-b" onclick="go('pending')">📋 View Pending</button>
+          <button class="btn-ghost" style="color:var(--text);" onclick="exportAll()">📥 Export Backup</button>
+          <button class="btn-ghost" style="color:var(--text);" onclick="go('agents')">👥 Add Agent</button>
+          <button class="btn-ghost" style="color:var(--text);" onclick="go('ledger')">💰 Pay Commission</button>
         </div>
       </div>
-    </div>
+      <div class="card">
+        <div class="ct">📈 Recent Activity</div>
+        <div id="activity-feed" style="font-size:0.82rem;color:var(--sub);"><em>Loading...</em></div>
+      </div>
+    </section>
 
-    <!-- APPROVED SCHOOLS -->
-    <div id="sec-approved" class="sec">
-      <div class="content">
-        <div class="card">
-          <div class="ct">🏫 Approved Schools <span style="font-size:.7rem;color:var(--sub);">(v2 test)</span></div>
-          <input placeholder="Search schools..." oninput="renderApproved(this.value)" style="margin-bottom:.5rem;">
-          <div id="approved-list"><p style="color:var(--sub);font-size:.8rem;text-align:center;padding:1rem;">Loading...</p></div>
-        </div>
+    <!-- PENDING -->
+    <section id="sec-pending" class="sec">
+      <div class="card">
+        <div class="ct">🔄 Pending Deals</div>
+        <p style="font-size:0.8rem;color:var(--sub);margin-bottom:0.75rem;">Approve to instantly create the school's account and send credentials via WhatsApp.</p>
+        <div id="pending-list"><p style="text-align:center;color:var(--sub);padding:2rem;">Listening for deals...</p></div>
       </div>
-    </div>
+    </section>
+
+    <!-- APPROVED -->
+    <section id="sec-approved" class="sec">
+      <div class="card">
+        <div class="ct">✅ Approved Schools</div>
+        <input type="text" id="search-approved" placeholder="Search school name or ID..." oninput="renderApproved()" style="margin-bottom:0.75rem;">
+        <div id="approved-list"></div>
+        <button class="btn-warning" style="margin-top:0.5rem;" onclick="repairSchool()">🔧 Fix School Login (Repair Account)</button>
+      </div>
+    </section>
 
     <!-- AGENTS -->
-    <div id="sec-agents" class="sec">
-      <div class="content">
-        <div class="card">
-          <div class="ct">👥 Registered Agents</div>
-          <p style="font-size:.74rem;color:var(--sub);margin-bottom:.5rem;">Agents are shared with production — changes here affect the live agent list.</p>
-          <div id="agents-list"><p style="color:var(--sub);font-size:.8rem;text-align:center;padding:1rem;">Loading...</p></div>
+    <section id="sec-agents" class="sec">
+      <!-- Pending Agent Requests -->
+      <div id="agent-requests-card" class="card" style="display:none;border-left:3px solid #f59e0b;margin-bottom:0.65rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+          <div class="ct" style="margin:0;">📬 Pending Agent Requests</div>
+          <span id="agent-req-count" style="font-size:0.72rem;font-weight:700;background:rgba(245,158,11,0.15);color:#f59e0b;padding:2px 8px;border-radius:12px;"></span>
         </div>
-        <div class="card">
-          <div class="ct">➕ Add Agent</div>
-          <label>Name</label><input id="ag-name" placeholder="Agent full name">
-          <label>Phone</label><input id="ag-phone" type="tel" placeholder="e.g. 08012345678">
-          <label>Commission %</label><input id="ag-rate" type="number" value="20">
-          <button class="btn-ok" style="width:100%;margin-top:.6rem;" onclick="saveAgent()">💾 Add Agent</button>
-        </div>
+        <p style="font-size:0.78rem;color:var(--sub);margin-bottom:0.65rem;">People who applied to become EduBloom agents. Approve to create their account instantly — they can log in immediately.</p>
+        <div id="agent-requests-list"></div>
       </div>
-    </div>
+      <div class="card">
+        <div class="ct">👥 Active Agents</div>
+        <button class="btn-b" style="width:auto;margin-bottom:0.75rem;" onclick="openM('add-agent-modal')">➕ Add Agent Manually</button>
+        <div id="agents-list"></div>
+      </div>
+ id="sec-ledger" class="sec">
+      <div class="card">
+        <div class="ct">💰 Commission Ledger</div>
+        <div class="twrap">
+          <table>
+            <thead><tr><th>Date</th><th>Agent</th><th>School</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="ledger-body"></tbody>
+          </table>
+        </div>
+        <button class="btn-ghost" style="color:var(--text);margin-top:0.5rem;" onclick="exportLedger()">📥 Export CSV</button>
+      </div>
+    </section>
 
-    <!-- LEDGER -->
-    <div id="sec-ledger" class="sec">
-      <div class="content">
-        <div class="card">
-          <div class="ct">💰 Commission Ledger <span style="font-size:.7rem;color:var(--sub);">(v2 test)</span></div>
-          <div id="ledger-body"><p style="color:var(--sub);font-size:.8rem;text-align:center;padding:1rem;">Loading...</p></div>
+    <!-- OPPORTUNITIES -->
+    <section id="sec-opps" class="sec">
+      <div class="card">
+        <div class="ct">🔍 Student Opportunities</div>
+        <p style="font-size:0.8rem;color:var(--sub);margin-bottom:0.75rem;">These appear in schools' portals under the Opportunities section.</p>
+        <button class="btn-b" style="width:auto;margin-bottom:0.75rem;" onclick="openM('add-opp-modal')">➕ Add Opportunity</button>
+        <div class="twrap">
+          <table>
+            <thead><tr><th>Title</th><th>Provider</th><th>Type</th><th>Deadline</th><th></th></tr></thead>
+            <tbody id="opp-body"></tbody>
+          </table>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- SETTINGS -->
-    <div id="sec-settings" class="sec">
-      <div class="content">
-        <div class="card">
-          <div class="ct">⚙️ Settings</div>
-          <label>DeepSeek-OCR Key <span style="font-size:.7rem;color:var(--money);">(ledger OCR — free at siliconflow.cn)</span></label>
-          <input id="s-deepseek" placeholder="Paste SiliconFlow API key here..." type="password">
-          <label style="font-size:.72rem;color:var(--sub);margin-top:2px;">Provider</label>
-          <select id="s-deepseek-provider">
-            <option value="siliconflow">SiliconFlow (free — recommended)</option>
-            <option value="novita">Novita.ai</option>
-            <option value="deepinfra">DeepInfra</option>
+    <section id="sec-settings" class="sec">
+      <div class="card">
+        <div class="ct">⚙️ Settings</div>
+        <label>Groq API Key (OCR primary — stored in Firestore)</label>
+        <input type="text" id="s-groq" placeholder="gsk_... paste your Groq API key here">
+        <label style="margin-top:0.5rem;">HuggingFace API Key (OCR fallback when Groq fails)</label>
+        <input type="text" id="s-hf" placeholder="hf_... paste your HuggingFace token here">
+        <div style="font-size:0.72rem;color:#94a3b8;margin-bottom:0.5rem;">Agents fetch this directly from Firestore now — no third-party proxy involved. Get a free key at <a href="https://console.groq.com" target="_blank">console.groq.com</a> → API Keys → Create.</div>
+        <button class="btn-b" style="background:#1e293b;margin-bottom:0.75rem;" onclick="syncOcrKeysToPublic()">🔄 Sync OCR Keys for Agent App</button>
+        <div style="font-size:0.7rem;color:var(--sub);margin-bottom:0.75rem;">Tap this once now, then again anytime you change the Groq/HF key above. Copies just these two keys — nothing else — to where the agent app can read them.</div>
+        <label>Default School First-Time Password</label>
+        <input type="text" id="s-schoolpwd" value="bloom2026">
+        <label>Backup Admin Password (used only if Firebase Auth is unreachable)</label>
+        <input type="text" id="s-adminpwd" placeholder="Leave blank to keep current">
+        <div style="font-size:0.7rem;color:var(--sub);margin-top:-8px;margin-bottom:0.75rem;">Restored 2026-08-02 — login tries your real Firebase Auth password first, and only falls back to this one if the Firebase Auth network call itself fails (not just a wrong password). Keeps you from being locked out by a flaky connection. Default if never set: <code>aarinat2024</code>.</div>
+        <label>CAC Auto-Allocation</label>
+        <select id="s-cac">
+          <option value="full">Add full agent commission to CAC fund</option>
+          <option value="half">Add 50% of commission to CAC</option>
+          <option value="none">Manual CAC only</option>
+        </select>
+        <label>WhatsApp Approval Message Template</label>
+        <textarea id="s-tpl" rows="8" placeholder="Use {{schoolId}} and {{password}} as placeholders"></textarea>
+        <label>Gemini API Key (for school OCR — from aistudio.google.com)</label>
+        <input type="text" id="s-gemini" placeholder="AQ.Ab8RN..." autocomplete="off">
+        <div style="font-size:0.72rem;color:var(--sub);margin-top:-8px;">
+          Powers handwriting recognition in the School Portal. Free tier from Google AI Studio.
+        </div>
+        <button class="btn-b" onclick="saveSettings()">💾 Save Settings</button>
+      </div>
+      <div class="card" style="border:1.5px solid rgba(220,38,38,0.4);">
+        <div class="ct" style="color:#f87171;">🧹 Production Reset</div>
+        <p style="font-size:0.82rem;color:var(--sub);margin-bottom:0.4rem;">Use this <strong style="color:var(--text);">once</strong> before going live with real schools. Wipes all test deals, fake approved schools, commission entries, and activity logs.</p>
+        <p style="font-size:0.78rem;color:#fbbf24;margin-bottom:0.75rem;">⚠️ Your settings, agents list, and CAC fund balance are NOT deleted.</p>
+        <button id="prod-reset-btn" class="btn-d" onclick="productionReset()">🧹 Wipe All Test Data — Start Fresh</button>
+      </div>
+
+      <div class="card">
+        <div class="ct">🗄️ Data Management</div>
+        <div class="grid2">
+          <button class="btn-b" onclick="exportAll()">📥 Export All</button>
+          <button class="btn-d" onclick="clearAll()">🗑️ Clear All Data</button>
+        </div>
+        <p style="font-size:0.72rem;color:var(--sub);margin-top:0.5rem;">Clear all is permanent and cannot be undone.</p>
+      </div>
+    </section>
+
+    <!-- CALENDAR -->
+    <section id="sec-calendar" class="sec">
+      <div class="card">
+        <div class="ct">📅 Nigeria School Term Calendar</div>
+        <p style="font-size:0.8rem;color:var(--sub);margin-bottom:0.75rem;">
+          These dates are used to calculate subscription expiry when you approve a school.
+          Each state can have custom dates. Select a state below to view or edit its term schedule.
+        </p>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:0.75rem;">
+          <label style="font-size:0.82rem;font-weight:600;">State:</label>
+          <select id="cal-state-select" onchange="onCalStateChange()" style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:4px 8px;color:var(--text);font-size:0.82rem;flex:1;min-width:160px;">
+            <option value="_default">All States (Default)</option>
           </select>
-          <label>Gemini API Key <span style="font-size:.7rem;color:var(--sub);">(alternative ledger OCR)</span></label>
-          <input id="s-gemini" placeholder="AIza..." type="password">
-          <label>Groq API Key <span style="font-size:.7rem;color:var(--sub);">(signboard OCR — works well)</span></label>
-          <input id="s-groq" placeholder="gsk_..." type="password">
-          <label>Admin Password</label><input id="s-adminpwd" type="password" placeholder="Leave blank to keep current">
-          <label>Default School Password</label><input id="s-schoolpwd" placeholder="bloom2026">
-          <label>WhatsApp Template</label>
-          <textarea id="s-tpl" rows="5" style="border-radius:10px;resize:vertical;">*Welcome to Educational Bloom!* 🎉
-
-Your school has been activated.
-
-*School ID:* {{schoolId}}
-*Password:* {{password}}
-*Portal:* https://kobomoba.github.io/bloom-school-v2/
-
-You already have your students and fee data inside. Log in and explore!
-– AariNAT Admin</textarea>
-          <button class="btn-ok" style="width:100%;margin-top:.65rem;" onclick="saveSettings()">💾 Save Settings</button>
+          <button onclick="addCalendarState()" style="background:#1e40af;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:0.78rem;cursor:pointer;white-space:nowrap;">➕ Add State</button>
+        </div>
+        <div id="cal-state-label" style="font-size:0.78rem;color:var(--sub);margin-bottom:8px;"></div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+            <thead>
+              <tr style="border-bottom:1px solid var(--border);">
+                <th style="text-align:left;padding:6px 4px;color:var(--sub);">Term</th>
+                <th style="text-align:left;padding:6px 4px;color:var(--sub);">📅 Resumption</th>
+                <th style="text-align:left;padding:6px 4px;color:var(--sub);">🏁 Vacation</th>
+                <th style="text-align:left;padding:6px 4px;color:var(--sub);">Days</th>
+              </tr>
+            </thead>
+            <tbody id="cal-table-body"></tbody>
+          </table>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:0.75rem;flex-wrap:wrap;">
+          <button onclick="saveCalendarState()" style="background:#059669;color:#fff;border:none;border-radius:6px;padding:6px 16px;font-size:0.82rem;cursor:pointer;font-weight:700;">💾 Save Dates</button>
+          <span id="cal-save-info" style="font-size:0.75rem;color:var(--sub);"></span>
         </div>
       </div>
-    </div>
+      <div class="card" style="font-size:0.78rem;color:var(--sub);">
+        <b style="color:var(--text);">How this works:</b>
+        When you approve a school, the system checks which term is currently active for that school's state
+        and sets the subscription expiry to the end of that term (or the end of the Nth term if they paid multiple).
+        If no calendar is set for a state, it falls back to 3 months per term.
+        <br><br>
+        <b style="color:var(--text);">To edit:</b> Select a state → change the dates → tap Save Dates.
+        Changes take effect immediately for new approvals.
+      </div>
+    </section>
 
-  </div>
+  </main>
 </div>
 
-<!-- APPROVE MODAL -->
+<!-- MODALS -->
 <div class="modal" id="approve-modal">
-  <div class="mbox" style="position:relative;">
-    <button class="mclose" onclick="closeM('approve-modal')">✕</button>
-    <div class="ct">✅ Approve Deal</div>
-    <div id="ap-preview"></div>
-    <div style="background:var(--s3);border-radius:10px;padding:.65rem;margin-top:.5rem;">
-      <div style="font-size:.76rem;color:var(--sub);">School ID</div>
-      <div style="font-weight:800;font-size:1rem;font-family:monospace;color:var(--brand);" id="ap-id"></div>
-      <div style="font-size:.76rem;color:var(--sub);margin-top:.3rem;">Password</div>
-      <div style="font-weight:700;" id="ap-pwd"></div>
+  <div class="mbox">
+    <div class="mhead"><h3>✅ Approve Deal</h3><button class="mclose" onclick="closeM('approve-modal')">×</button></div>
+    <div id="ap-preview" style="margin-bottom:1rem;"></div>
+    <div style="background:#080f1a;padding:0.9rem;border-radius:9px;border:1px solid var(--border);margin-bottom:1rem;">
+      <div style="font-size:0.68rem;color:var(--sub);margin-bottom:0.2rem;">GENERATED SCHOOL ID</div>
+      <div id="ap-id" style="font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;color:#60a5fa;">—</div>
+      <div style="font-size:0.68rem;color:var(--sub);margin:0.5rem 0 0.2rem;">FIRST-TIME PASSWORD</div>
+      <div id="ap-pwd" style="font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;">—</div>
     </div>
-    <div id="ap-students-preview" style="display:none;margin-top:.5rem;">
-      <div style="font-size:.76rem;font-weight:700;color:var(--money);margin-bottom:.3rem;" id="ap-students-count"></div>
-      <div class="student-preview" id="ap-students-list"></div>
-    </div>
-    <button class="btn-ok" style="width:100%;margin-top:.75rem;" onclick="confirmApproval()">✅ Approve & Activate</button>
-    <button class="btn-g btn-sm" style="width:100%;margin-top:.4rem;" onclick="closeM('approve-modal')">Cancel</button>
+    <p style="font-size:0.78rem;color:var(--sub);margin-bottom:0.75rem;">This will: create the school's login account, add them to approved schools, log the commission, and open WhatsApp with their credentials.</p>
+    <button class="btn-g" onclick="confirmApproval()">✅ Approve & Activate</button>
+    <button class="btn-ghost" style="color:white;margin-top:0.4rem;" onclick="closeM('approve-modal')">Cancel</button>
   </div>
 </div>
 
-<script src="portal_app.js?v=1"></script>
+<div class="modal" id="add-agent-modal">
+  <div class="mbox">
+    <div class="mhead"><h3>➕ Add Agent</h3><button class="mclose" onclick="closeM('add-agent-modal')">×</button></div>
+    <label>Full Name</label><input type="text" id="ag-name" placeholder="e.g. Grace Okonkwo">
+    <label>WhatsApp Number</label><input type="tel" id="ag-phone" placeholder="2348012345678">
+    <label>Commission Rate (%)</label><input type="number" id="ag-rate" value="20" min="0" max="100">
+    <button id="add-agent-btn" class="btn-b" onclick="saveAgent()">💾 Add Agent</button>
+  </div>
+</div>
+
+<div class="modal" id="add-opp-modal">
+  <div class="mbox">
+    <div class="mhead"><h3>➕ Add Opportunity</h3><button class="mclose" onclick="closeM('add-opp-modal')">×</button></div>
+    <label>Title</label><input type="text" id="opp-title" placeholder="e.g. PTDF Scholarship">
+    <label>Provider</label><input type="text" id="opp-provider" placeholder="e.g. PTDF">
+    <label>Type</label>
+    <select id="opp-type"><option value="scholarship">Scholarship</option><option value="grant">Grant</option><option value="internship">Internship</option><option value="competition">Competition</option></select>
+    <label>Amount/Value</label><input type="text" id="opp-amount" placeholder="e.g. Full Tuition">
+    <label>Deadline</label><input type="date" id="opp-deadline">
+    <label>Eligibility</label><textarea id="opp-elig" rows="2" placeholder="e.g. Nigerian citizen, SS3 student"></textarea>
+    <label>Application URL</label><input type="url" id="opp-url" placeholder="https://...">
+    <button class="btn-b" onclick="saveOpp()">💾 Add Opportunity</button>
+  </div>
+</div>
+
+<script src="portal_app.js?v=20260802-loginfallback"></script>
+
+<!-- Edit Agent Modal -->
+<div class="modal" id="edit-agent-modal">
+  <div class="mbox">
+    <div class="mhead"><h3>✏️ Edit Agent</h3><button class="mclose" onclick="closeM('edit-agent-modal')">×</button></div>
+    <input type="hidden" id="edit-ag-id">
+    <label class="lbl">Full Name</label>
+    <input class="inp" id="edit-ag-name" placeholder="Full Name">
+    <label class="lbl">WhatsApp Number</label>
+    <input class="inp" id="edit-ag-phone" placeholder="08012345678">
+    <label class="lbl">Commission Rate (%)</label>
+    <input class="inp" type="number" id="edit-ag-rate" value="20" min="0" max="100">
+    <button class="btn-b" id="edit-ag-btn" onclick="saveEditAgent()">💾 Save Changes</button>
+    <button class="btn-ghost" style="color:white;margin-top:0.4rem;" onclick="closeM('edit-agent-modal')">Cancel</button>
+  </div>
+</div>
+
+<!-- Edit School Modal -->
+<div class="modal" id="edit-school-modal">
+  <div class="mbox">
+    <div class="mhead"><h3>✏️ Edit School</h3><button class="mclose" onclick="closeM('edit-school-modal')">×</button></div>
+    <input type="hidden" id="edit-sc-docid">
+    <input type="hidden" id="edit-sc-schoolid">
+    <label class="lbl">School Name</label>
+    <input class="inp" id="edit-sc-name" placeholder="School Name">
+    <label class="lbl">Principal Phone</label>
+    <input class="inp" id="edit-sc-phone" placeholder="08012345678">
+    <label class="lbl">Principal Email</label>
+    <input class="inp" id="edit-sc-email" placeholder="principal@school.edu.ng">
+    <label class="lbl">Login Password</label>
+    <input class="inp" id="edit-sc-pwd" placeholder="Password">
+    <label class="lbl">Agent Name</label>
+    <input class="inp" id="edit-sc-agent" placeholder="Agent Name">
+    <button class="btn-b" id="edit-sc-btn" onclick="saveEditSchool()">💾 Save Changes</button>
+    <button class="btn-ghost" style="color:white;margin-top:0.4rem;" onclick="closeM('edit-school-modal')">Cancel</button>
+  </div>
+</div>
+
+  <script>
+    if('serviceWorker' in navigator){
+      window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=1781679935').catch(()=>{}));
+    }
+  </script>
+
+<!-- Legal / Compliance footer — added, does not affect app layout -->
+<div style="max-width:680px;margin:0 auto;padding:1.2rem 1rem 1.6rem;text-align:center;font-size:0.66rem;color:#64748b;">
+  <a href="https://edubloom.com.ng/privacy.html" target="_blank" style="color:#64748b;text-decoration:none;margin:0 5px;">Privacy Policy</a>·
+  <a href="https://edubloom.com.ng/terms.html" target="_blank" style="color:#64748b;text-decoration:none;margin:0 5px;">Terms of Use</a>·
+  <a href="https://edubloom.com.ng/data-compliance.html" target="_blank" style="color:#64748b;text-decoration:none;margin:0 5px;">Data &amp; Compliance</a>·
+  <a href="https://edubloom.com.ng/ip-policy.html" target="_blank" style="color:#64748b;text-decoration:none;margin:0 5px;">IP Policy</a>
+  <div style="margin-top:4px;">© 2026 AariNAT Company Limited</div>
+</div>
+
 </body>
 </html>
