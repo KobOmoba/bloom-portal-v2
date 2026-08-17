@@ -1,14 +1,7 @@
-# Portal Sandbox
-**Sandbox repo — Changes proved here → ported to bloom-portal**
+# Edu-BLOOM Sandbox App
 
-## 📖 Full documentation
-See [MASTER_README.md](https://github.com/KobOmoba/bloom-portal/blob/main/MASTER_README.md)
-in bloom-portal for architecture, security status, Firestore rules, and all standing rules.
+Full documentation, port protocol, and sandbox history:
+**[Sandbox Master README](https://github.com/KobOmoba/bloom-agent-v2/blob/main/README.md)**
 
-## This repo
-- **Source:** bloom-portal (production)
-- **URL:** kobomoba.github.io/bloom-portal-v2/
-- **Purpose:** Prove changes here before porting to bloom-portal
-
-## Latest changes
-See `git log` or commit history above.
+All session notes, architecture, and history live there.
+Do not add content to this file.
